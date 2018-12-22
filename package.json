@@ -1,0 +1,17 @@
+{
+  "name": "x-pdf-parse",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/i62navpm/xPdfParse",
+  "author": "Manuel Navarro Pérez",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "prettier": "^1.15.3"
+  }
+}
