@@ -5,13 +5,24 @@
   "repository": "https://github.com/i62navpm/xPdfParse",
   "author": "Manuel Navarro Pérez",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint --ext .js --ignore-path .gitignore ."
+  },
   "devDependencies": {
     "eslint": "^5.10.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "husky": "^1.2.1",
+    "lerna": "^3.8.0",
     "prettier": "^1.15.3"
   }
 }
