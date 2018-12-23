@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon -L --inspect-brk=0.0.0.0:9229 index.js --watch src",
     "lint": "eslint --ext .js --ignore-path .gitignore ."
   },
   "devDependencies": {
@@ -23,6 +24,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^1.2.1",
     "lerna": "^3.8.0",
+    "nodemon": "^1.18.9",
     "prettier": "^1.15.3"
   }
 }
