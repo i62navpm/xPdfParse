@@ -1,4 +1,4 @@
-FROM i62navpm/xpdf-parse
+FROM i62navpm/xpdf-parse:latest
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
