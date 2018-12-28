@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon -L --inspect-brk=0.0.0.0:9229 index.js --watch src",
+    "dev": "nodemon -L --inspect-brk=0.0.0.0:9229 index.js --watch packages",
     "lint": "eslint --ext .js --ignore-path .gitignore ."
   },
   "devDependencies": {

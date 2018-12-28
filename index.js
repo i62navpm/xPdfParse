@@ -1,5 +1,1 @@
-function main() {
-  console.log('test')
-}
-
-main()
+require('parse-pdfs')
