@@ -1,0 +1,7 @@
+{
+  "name": "parse-pdfs",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Manuel Navarro Pérez",
+  "license": "MIT"
+}
