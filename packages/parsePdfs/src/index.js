@@ -1,13 +1,16 @@
-const path = require('path')
+const stream = require('stream')
+const util = require('util')
 const fileToStream = require('./helpers/fileToStream')
 const streamToArray = require('./helpers/transformStreamToArray')
-const ArrayToObject = require('./helpers/transformArrayToObject')
 
-const child = fileToStream(path.join(__dirname, '/../pdfs/test.pdf'))
+const pipeline = util.promisify(stream.pipeline)
 
-child.stdout
-  .pipe(streamToArray)
-  .pipe(ArrayToObject)
-  .pipe(process.stdout)
+module.exports = async function(inputFileStream = '', transforms = []) {
+  if (!inputFileStream) throw new Error('There is not a input file stream')
 
-module.exports = 'watch changes'
+  return pipeline([
+    fileToStream(inputFileStream).stdout,
+    streamToArray,
+    ...transforms,
+  ])
+}
