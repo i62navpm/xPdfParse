@@ -61,7 +61,7 @@ exports.extractApi = {
   save() {
     if (this.options.debug) {
       this.stream.pipe(process.stdout)
-      return
+      return Promise.resolve()
     }
 
     createPath(this.outputPath)
@@ -168,6 +168,16 @@ exports.extractApi = {
         list: 'bilingualList',
       },
       { debug: false }
+    )
+    .extract()
+    .normalize()
+    .save()
+  await exports.extractApi
+    .from(
+      {
+        list: 'voluntaryList',
+      },
+      { debug: false, specialtyInline: true }
     )
     .extract()
     .normalize()
