@@ -2,7 +2,7 @@ function normalizeSpecialty(data = '') {
   return data.trim().toUpperCase()
 }
 function normalizeNif(data = '') {
-  return data.trim().replace(/·|�/g, '')
+  return data.trim().replace(/\*|·|�/g, '')
 }
 function normalizeApellidosynombre(data = '') {
   return data
@@ -22,6 +22,12 @@ function normalizeAcceso2(data = '') {
 function normalizeExp(data = '') {
   return !!data
 }
+function normalizeDat(data = '') {
+  return +data
+}
+function normalizeTipoVacantes(data = '') {
+  return data.trim().replace(/\s+/g, ',')
+}
 
 module.exports = {
   normalizeSpecialty,
@@ -31,4 +37,6 @@ module.exports = {
   normalizeOrden,
   normalizeAcceso2,
   normalizeExp,
+  normalizeDat,
+  normalizeTipoVacantes,
 }
