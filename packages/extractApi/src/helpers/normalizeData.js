@@ -1,3 +1,6 @@
+function normalizeSpecialty(data = '') {
+  return data.trim().toUpperCase()
+}
 function normalizeNif(data = '') {
   return data.trim().replace(/·|�/g, '')
 }
@@ -21,6 +24,7 @@ function normalizeExp(data = '') {
 }
 
 module.exports = {
+  normalizeSpecialty,
   normalizeNif,
   normalizeApellidosynombre,
   normalizePuntuacion,

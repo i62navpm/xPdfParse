@@ -74,3 +74,6 @@ typings/
 
 # Configuration files
 config
+
+packages/extractInfo
+docs

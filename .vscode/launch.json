@@ -14,8 +14,8 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/packages/extractInfo/src/index.js",
-      "cwd": "${workspaceFolder}/packages/extractInfo"
+      "program": "${workspaceFolder}/packages/extractApi/src/index.js",
+      "cwd": "${workspaceFolder}/packages/extractApi"
     }
   ]
 }
