@@ -9,14 +9,21 @@ const consola = require('consola')
   .withTag('extractApi')
 
 exports.extractApi = {
+  options: { debug: false },
   list: '',
   specialty: '',
   inputPath: '',
   outputPath: '',
   stream: null,
-  from({ list = '', specialty = '', date = getCurrentDate() } = {}) {
+  from(
+    { list = '', specialty = '', date = getCurrentDate() } = {},
+    options = {}
+  ) {
     this.list = list
     this.specialty = specialty
+    this.options = { ...this.options, ...options }
+
+    if (this.options.debug) consola.warn('Debug mode is enabled')
 
     this.inputPath = getFilePath(
       { folder: 'pdf', extension: 'pdf' },
@@ -36,28 +43,29 @@ exports.extractApi = {
 
     return this
   },
-  extract(options = { debug: false }) {
-    if (options.debug) consola.warn('Debug mode is enabled')
-
-    this.stream = parsePdfs(this.inputPath)
-      .pipe(
-        extractInfo({ list: this.list, specialty: this.specialty }, options)
-      )
-      .pipe(
-        normalizeInfo({ list: this.list, specialty: this.specialty }, options)
-      )
-
+  extract() {
+    this.stream = parsePdfs(this.inputPath).pipe(
+      extractInfo({ list: this.list, specialty: this.specialty }, this.options)
+    )
     return this
   },
-  split() {},
-  save(options = { debug: false }) {
-    if (options.debug) {
+  normalize() {
+    this.stream = this.stream.pipe(
+      normalizeInfo(
+        { list: this.list, specialty: this.specialty },
+        this.options
+      )
+    )
+    return this
+  },
+  save() {
+    if (this.options.debug) {
       this.stream.pipe(process.stdout)
       return
     }
 
     createPath(this.outputPath)
-    this.stream.pipe(saveInfo(this.outputPath, options))
+    this.stream.pipe(saveInfo(this.outputPath, this.options))
 
     return new Promise((resolve, reject) => {
       this.stream.on('end', resolve)
@@ -67,65 +75,101 @@ exports.extractApi = {
 }
 ;(async function() {
   await exports.extractApi
-    .from({
-      list: 'normalList',
-      specialty: 'AL',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'normalList',
+        specialty: 'AL',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
   await exports.extractApi
-    .from({
-      list: 'normalList',
-      specialty: 'EF',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'normalList',
+        specialty: 'EF',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
   await exports.extractApi
-    .from({
-      list: 'normalList',
-      specialty: 'EI',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'normalList',
+        specialty: 'EI',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
   await exports.extractApi
-    .from({
-      list: 'normalList',
-      specialty: 'FI',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'normalList',
+        specialty: 'FI',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
   await exports.extractApi
-    .from({
-      list: 'normalList',
-      specialty: 'FR',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'normalList',
+        specialty: 'FR',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
   await exports.extractApi
-    .from({
-      list: 'normalList',
-      specialty: 'MU',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'normalList',
+        specialty: 'MU',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
   await exports.extractApi
-    .from({
-      list: 'normalList',
-      specialty: 'PRI',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'normalList',
+        specialty: 'PRI',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
   await exports.extractApi
-    .from({
-      list: 'normalList',
-      specialty: 'PT',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'normalList',
+        specialty: 'PT',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
   await exports.extractApi
-    .from({
-      list: 'bilingualList',
-    })
-    .extract({ debug: false })
+    .from(
+      {
+        list: 'bilingualList',
+      },
+      { debug: false }
+    )
+    .extract()
+    .normalize()
     .save()
 })()
