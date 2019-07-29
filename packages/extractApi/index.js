@@ -76,7 +76,7 @@ async function init() {
   try {
     for (const list of voluntaryList) {
       await extractApi
-        .from(list, { debug: false, specialtyInline: true })
+        .from(list, { debug: false, extractFromInline: true })
         .extract()
         .normalize()
         .save()

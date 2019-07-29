@@ -2,6 +2,7 @@ const parsePdfs = require('parse-pdfs')
 const { getCurrentDate } = require('./helpers/date')
 const { getFilePath, existsFile, createPath } = require('./helpers/path')
 const extractInfo = require('./util/extractFromStream')
+const extractFromInlineInfo = require('./util/extractFromInlineStream')
 const normalizeInfo = require('./util/normalizeFromStream')
 const saveInfo = require('./util/saveFromStream')
 const consola = require('consola')
@@ -43,8 +44,12 @@ exports.extractApi = {
     return this
   },
   extract() {
+    const extractFn = this.options.extractFromInline
+      ? extractFromInlineInfo
+      : extractInfo
+
     this.stream = parsePdfs(this.inputPath).pipe(
-      extractInfo({ list: this.list, specialty: this.specialty }, this.options)
+      extractFn({ list: this.list, specialty: this.specialty }, this.options)
     )
     return this
   },
