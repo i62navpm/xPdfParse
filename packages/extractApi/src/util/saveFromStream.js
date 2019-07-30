@@ -17,12 +17,8 @@ module.exports = (outputPath, { debug = false } = {}) => {
 
         if (specialty) {
           if (specialty !== tempSpecialty) {
-            writeStream && writeStream.end()
             writeStream = fs.createWriteStream(
-              `${outputPath}/${specialty}.json`,
-              {
-                autoClose: false,
-              }
+              `${outputPath}/${specialty}.json`
             )
             tempSpecialty = specialty
           }
