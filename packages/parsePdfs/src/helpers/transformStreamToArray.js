@@ -3,6 +3,7 @@ const { Transform } = require('stream')
 
 module.exports = () =>
   new Transform({
+    readableObjectMode: true,
     transform(chunk, encoding, callback) {
       chunk
         .toString()

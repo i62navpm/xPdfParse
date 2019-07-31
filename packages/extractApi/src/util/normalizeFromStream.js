@@ -7,6 +7,8 @@ module.exports = ({ list, specialty }, { debug = false } = {}) => {
   const op = oppositorModel({ list, specialty })
 
   return new Transform({
+    writableObjectMode: true,
+    readableObjectMode: true,
     async transform(chunk, encoding, callback) {
       if (debug) {
         this.push(chunk)
@@ -14,23 +16,23 @@ module.exports = ({ list, specialty }, { debug = false } = {}) => {
       }
 
       try {
-        const { specialty, ...oppositor } = JSON.parse(chunk.toString())
+        const { specialty, ...oppositor } = chunk
         if (specialty) {
           const { data } = await sp
             .from({ specialty })
             .normalize()
             .validate()
-          this.push(JSON.stringify(data))
+          this.push(data)
         } else {
           const { data } = await op
             .from(oppositor)
             .normalize()
             .validate()
-          this.push(JSON.stringify(data))
+          this.push(data)
         }
         callback()
       } catch (err) {
-        console.log(chunk.toString())
+        console.log(chunk)
         callback(err)
       }
     },

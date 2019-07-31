@@ -10,9 +10,11 @@ module.exports = ({ list, specialty }, { debug = false } = {}) => {
   const fixLB = fixLineBreak(list)
 
   return new Transform({
+    writableObjectMode: true,
+    readableObjectMode: true,
     transform(chunk, encoding, callback) {
       if (debug) {
-        this.push(JSON.stringify(chunk.toString()) + '\n')
+        this.push(chunk + '\n')
         return callback()
       }
 
@@ -20,21 +22,21 @@ module.exports = ({ list, specialty }, { debug = false } = {}) => {
         if (fixLB.checkIfChunkTemporarily()) {
           chunk = fixLB.mergeChunkWithTemporarily(chunk)
           const { specialty, ...oppositor } = op.getOppositor(chunk)
-          this.push(JSON.stringify({ specialty }))
-          this.push(JSON.stringify(oppositor))
+          this.push({ specialty })
+          this.push(oppositor)
         } else if (op.isOppositor(chunk)) {
           if (fixLB.checkNeedToFixLineBreak(chunk)) {
             fixLB.saveChunkTemporarily(chunk)
             return callback()
           }
           const { specialty, ...oppositor } = op.getOppositor(chunk)
-          this.push(JSON.stringify({ specialty }))
-          this.push(JSON.stringify(oppositor))
+          this.push({ specialty })
+          this.push(oppositor)
         }
 
         callback()
       } catch (err) {
-        consola.log(JSON.stringify(chunk.toString()))
+        consola.log(chunk.toString())
         callback(err)
       }
     },
