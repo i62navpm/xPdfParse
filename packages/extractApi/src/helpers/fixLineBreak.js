@@ -4,7 +4,7 @@ module.exports = function fixLineBreak(list) {
   let concactWithNext = ''
 
   function checkNeedToFixLineBreak(chunk) {
-    return chunk.length < lengthToLineBreak[list]
+    return chunk.trim().length < lengthToLineBreak[list]
   }
 
   function checkIfChunkTemporarily() {
