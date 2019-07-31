@@ -10,13 +10,16 @@ const consola = require('consola')
   .withDefaults({ badge: true })
   .withTag('extractApi')
 
-exports.extractApi = {
-  options: { debug: false },
-  list: '',
-  specialty: '',
-  inputPath: '',
-  outputPath: '',
-  stream: null,
+module.exports = class ExtractApi {
+  constructor() {
+    this.options = { debug: false }
+    this.list = ''
+    this.specialty = ''
+    this.inputPath = ''
+    this.outputPath = ''
+    this.stream = null
+  }
+
   from(
     { list = '', specialty = '', date = getCurrentDate() } = {},
     options = {}
@@ -43,7 +46,7 @@ exports.extractApi = {
     )
 
     return this
-  },
+  }
   extract() {
     const extractFn = this.options.extractFromInline
       ? extractFromInlineInfo
@@ -53,7 +56,7 @@ exports.extractApi = {
       extractFn({ list: this.list, specialty: this.specialty }, this.options)
     )
     return this
-  },
+  }
   normalize() {
     this.stream = this.stream.pipe(
       normalizeInfo(
@@ -62,13 +65,13 @@ exports.extractApi = {
       )
     )
     return this
-  },
+  }
   saveSourceTruth() {
     this.stream = this.stream.pipe(
       saveSourceTruth(this.outputPath, this.options)
     )
     return this
-  },
+  }
   save() {
     if (this.options.debug) {
       this.stream.pipe(process.stdout)
@@ -76,11 +79,11 @@ exports.extractApi = {
     }
 
     createPath(this.outputPath)
-    this.stream.pipe(saveInfo(this.outputPath, this.options))
+    this.stream = this.stream.pipe(saveInfo(this.outputPath, this.options))
 
     return new Promise((resolve, reject) => {
-      this.stream.on('end', resolve)
+      this.stream.on('finish', resolve)
       this.stream.on('error', reject)
     })
-  },
+  }
 }

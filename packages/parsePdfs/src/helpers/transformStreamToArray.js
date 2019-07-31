@@ -1,14 +1,30 @@
 const os = require('os')
 const { Transform } = require('stream')
 
-module.exports = () =>
-  new Transform({
-    readableObjectMode: true,
+let readerChunk = new Transform({
+  readableObjectMode: true,
+})
+
+exports.joinChunk = () => {
+  let chunkReduce = ''
+  const writer = new Transform({
     transform(chunk, encoding, callback) {
-      chunk
-        .toString()
-        .split(os.EOL)
-        .forEach(chunk => this.push(chunk))
+      chunkReduce += chunk
       callback()
     },
   })
+
+  writer.on('end', () => {
+    chunkReduce
+      .toString()
+      .split(os.EOL)
+      .forEach(chunk => readerChunk.push(chunk))
+    readerChunk = new Transform({
+      readableObjectMode: true,
+    })
+  })
+
+  return writer
+}
+
+exports.getChunk = () => readerChunk

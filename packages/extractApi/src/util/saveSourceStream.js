@@ -7,6 +7,7 @@ module.exports = (outputPath, { debug = false } = {}) => {
 
   const writable = new Transform({
     writableObjectMode: true,
+    readableObjectMode: true,
     transform(chunk, encoding, callback) {
       if (debug) {
         this.push(chunk)
@@ -24,7 +25,7 @@ module.exports = (outputPath, { debug = false } = {}) => {
         } else {
           sourceTruth[tempSpecialty][oppositor.orden] = oppositor
         }
-        callback()
+        callback(null, chunk)
       } catch (err) {
         callback(err)
       }

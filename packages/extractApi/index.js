@@ -1,4 +1,4 @@
-const { extractApi } = require('./src')
+const ExtractApi = require('./src')
 const consola = require('consola')
   .withDefaults({ badge: true })
   .withTag('extractApi')
@@ -51,6 +51,7 @@ const voluntaryList = [
 ]
 
 async function init() {
+  let extractApi = new ExtractApi()
   try {
     for (const list of normalList) {
       await extractApi
@@ -63,6 +64,7 @@ async function init() {
   } catch (err) {
     consola.error(`[NormalList]${err}`)
   }
+
   try {
     for (const list of bilingualList) {
       await extractApi
