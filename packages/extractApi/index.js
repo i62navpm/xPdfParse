@@ -57,6 +57,7 @@ async function init() {
         .from(list, { debug: false })
         .extract()
         .normalize()
+        .saveSourceTruth()
         .save()
     }
   } catch (err) {

@@ -5,6 +5,7 @@ const extractInfo = require('./util/extractFromStream')
 const extractFromInlineInfo = require('./util/extractFromInlineStream')
 const normalizeInfo = require('./util/normalizeFromStream')
 const saveInfo = require('./util/saveFromStream')
+const saveSourceTruth = require('./util/saveSourceStream')
 const consola = require('consola')
   .withDefaults({ badge: true })
   .withTag('extractApi')
@@ -59,6 +60,12 @@ exports.extractApi = {
         { list: this.list, specialty: this.specialty },
         this.options
       )
+    )
+    return this
+  },
+  saveSourceTruth() {
+    this.stream = this.stream.pipe(
+      saveSourceTruth(this.outputPath, this.options)
     )
     return this
   },
