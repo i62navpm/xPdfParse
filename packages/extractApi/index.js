@@ -49,10 +49,15 @@ const voluntaryList = [
     list: 'voluntaryList',
   },
 ]
+const assignmentList = [
+  {
+    list: 'assignmentList',
+  },
+]
 
 async function init() {
-  let extractApi = new ExtractApi()
   try {
+    let extractApi = new ExtractApi()
     for (const list of normalList) {
       await extractApi
         .from(list, { debug: false })
@@ -66,6 +71,7 @@ async function init() {
   }
 
   try {
+    let extractApi = new ExtractApi()
     for (const list of bilingualList) {
       await extractApi
         .from(list, { debug: false })
@@ -77,6 +83,7 @@ async function init() {
     consola.error(`[BilingualList]${err}`)
   }
   try {
+    let extractApi = new ExtractApi()
     for (const list of voluntaryList) {
       await extractApi
         .from(list, { debug: false, extractFromInline: true })
@@ -86,6 +93,18 @@ async function init() {
     }
   } catch (err) {
     consola.error(`[VoluntaryList]${err}`)
+  }
+  try {
+    let extractApi = new ExtractApi()
+    for (const list of assignmentList) {
+      await extractApi
+        .from(list, { debug: false })
+        .extract()
+        .normalize()
+        .save()
+    }
+  } catch (err) {
+    consola.error(`[AssignmentList]${err}`)
   }
 }
 
