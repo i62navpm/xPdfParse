@@ -28,6 +28,18 @@ function normalizeDat(data = '') {
 function normalizeTipoVacantes(data = '') {
   return data.trim().replace(/\s+/g, ',')
 }
+function normalizeJornada(data = '') {
+  return data
+    .trim()
+    .toLowerCase()
+    .replace(/\s{2,}/g, ' ')
+}
+function normalizeAsignacion(data = '') {
+  return data
+    .trim()
+    .toLowerCase()
+    .replace(/\s{2,}/g, ' ')
+}
 
 module.exports = {
   normalizeSpecialty,
@@ -39,4 +51,6 @@ module.exports = {
   normalizeExp,
   normalizeDat,
   normalizeTipoVacantes,
+  normalizeJornada,
+  normalizeAsignacion,
 }
