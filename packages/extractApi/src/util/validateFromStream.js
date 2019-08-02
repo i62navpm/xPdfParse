@@ -9,7 +9,7 @@ module.exports = ({ list, specialty }, { debug = false } = {}) => {
   return new Transform({
     writableObjectMode: true,
     readableObjectMode: true,
-    transform(chunk, encoding, callback) {
+    async transform(chunk, encoding, callback) {
       if (debug) {
         this.push(chunk)
         return callback()
@@ -18,8 +18,8 @@ module.exports = ({ list, specialty }, { debug = false } = {}) => {
       try {
         const { specialty, ...oppositor } = chunk
         const { data } = specialty
-          ? sp.from({ specialty }).normalize()
-          : op.from(oppositor).normalize()
+          ? await sp.from({ specialty }).validate()
+          : await op.from(oppositor).validate()
         this.push(data)
 
         callback()

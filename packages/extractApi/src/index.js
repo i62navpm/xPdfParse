@@ -4,6 +4,7 @@ const { getFilePath, existsFile, createPath } = require('./helpers/path')
 const extractInfo = require('./util/extractFromStream')
 const extractFromInlineInfo = require('./util/extractFromInlineStream')
 const normalizeInfo = require('./util/normalizeFromStream')
+const validateInfo = require('./util/validateFromStream')
 const saveInfo = require('./util/saveFromStream')
 const saveSourceTruth = require('./util/saveSourceStream')
 const consola = require('consola')
@@ -63,6 +64,12 @@ module.exports = class ExtractApi {
         { list: this.list, specialty: this.specialty },
         this.options
       )
+    )
+    return this
+  }
+  validate() {
+    this.stream = this.stream.pipe(
+      validateInfo({ list: this.list, specialty: this.specialty }, this.options)
     )
     return this
   }

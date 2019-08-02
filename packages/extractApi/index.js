@@ -63,6 +63,7 @@ async function init() {
         .from(list, { debug: false })
         .extract()
         .normalize()
+        .validate()
         .saveSourceTruth()
         .save()
     }
@@ -77,6 +78,7 @@ async function init() {
         .from(list, { debug: false })
         .extract()
         .normalize()
+        .validate()
         .save()
     }
   } catch (err) {
@@ -89,6 +91,7 @@ async function init() {
         .from(list, { debug: false, extractFromInline: true })
         .extract()
         .normalize()
+        .validate()
         .save()
     }
   } catch (err) {
@@ -101,6 +104,7 @@ async function init() {
         .from(list, { debug: false })
         .extract()
         .normalize()
+        .validate()
         .save()
     }
   } catch (err) {
