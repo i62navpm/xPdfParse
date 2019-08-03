@@ -7,6 +7,7 @@ const normalizeInfo = require('./util/normalizeFromStream')
 const validateInfo = require('./util/validateFromStream')
 const saveInfo = require('./util/saveFromStream')
 const saveSourceTruth = require('./util/saveSourceStream')
+const getFromSourceTruth = require('./util/getSourceStream')
 const consola = require('consola')
   .withDefaults({ badge: true })
   .withTag('extractApi')
@@ -16,6 +17,7 @@ module.exports = class ExtractApi {
     this.options = { debug: false }
     this.list = ''
     this.specialty = ''
+    this.date = ''
     this.inputPath = ''
     this.outputPath = ''
     this.stream = null
@@ -27,6 +29,7 @@ module.exports = class ExtractApi {
   ) {
     this.list = list
     this.specialty = specialty
+    this.date = date
     this.options = { ...this.options, ...options }
 
     if (this.options.debug) consola.warn('Debug mode is enabled')
@@ -73,10 +76,22 @@ module.exports = class ExtractApi {
     )
     return this
   }
-  saveSourceTruth() {
-    this.stream = this.stream.pipe(
-      saveSourceTruth(this.outputPath, this.options)
+  getFromSourceTruth() {
+    const outputPath = getFilePath(
+      { folder: 'json' },
+      { list: 'sourceTruth', specialty: this.specialty, date: '.' }
     )
+    this.stream = this.stream.pipe(getFromSourceTruth(outputPath, this.options))
+    return this
+  }
+  saveSourceTruth() {
+    const outputPath = getFilePath(
+      { folder: 'json' },
+      { list: 'sourceTruth', specialty: this.specialty, date: '.' }
+    )
+
+    createPath(outputPath)
+    this.stream = this.stream.pipe(saveSourceTruth(outputPath, this.options))
     return this
   }
   save() {

@@ -78,6 +78,7 @@ async function init() {
         .from(list, { debug: false })
         .extract()
         .normalize()
+        .getFromSourceTruth()
         .validate()
         .save()
     }
@@ -91,6 +92,7 @@ async function init() {
         .from(list, { debug: false, extractFromInline: true })
         .extract()
         .normalize()
+        .getFromSourceTruth()
         .validate()
         .save()
     }
@@ -104,6 +106,7 @@ async function init() {
         .from(list, { debug: false })
         .extract()
         .normalize()
+        .getFromSourceTruth()
         .validate()
         .save()
     }
