@@ -19,6 +19,8 @@ module.exports = data =>
         .regex(/^DAT/i)
         .required(),
       jornada: Joi.string().allow('', null),
-      date: Joi.date(),
+      date: Joi.string()
+        .regex(/^\w{4}-\w{2}-\w{2}$/)
+        .required(),
     })
     .validate(data)
