@@ -13,7 +13,7 @@ function getSpecialty(specialty) {
 
   return specialtyMapObject[specialty] || specialty
 }
-module.exports = (outputPath, { debug = false } = {}) => {
+module.exports = (outputPath, { insertDate = '', debug = false } = {}) => {
   let sourceTruth = {}
   let tempSpecialty = ''
 
@@ -53,6 +53,7 @@ module.exports = (outputPath, { debug = false } = {}) => {
           }
 
           chunk = { ...oppositor, ...oppData }
+          if (insertDate) chunk = { ...chunk, date: insertDate }
         }
         callback(null, chunk)
       } catch (err) {
