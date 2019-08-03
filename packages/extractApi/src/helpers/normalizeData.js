@@ -14,7 +14,10 @@ function normalizePuntuacion(data = '') {
   return +data.trim().replace(',', '.')
 }
 function normalizeOrden(data = '') {
-  return +data.trim()
+  return +data
+    .replace(/\s+/, '.')
+    .replace(/\.+/, '.')
+    .trim()
 }
 function normalizeAcceso2(data = '') {
   return !!data
@@ -40,6 +43,12 @@ function normalizeAsignacion(data = '') {
     .toLowerCase()
     .replace(/\s{2,}/g, ' ')
 }
+function normalizeDatName(data = '') {
+  return data
+    .trim()
+    .toLowerCase()
+    .replace(/\s{2,}/g, ' ')
+}
 
 module.exports = {
   normalizeSpecialty,
@@ -50,6 +59,7 @@ module.exports = {
   normalizeAcceso2,
   normalizeExp,
   normalizeDat,
+  normalizeDatName,
   normalizeTipoVacantes,
   normalizeJornada,
   normalizeAsignacion,
