@@ -9,6 +9,7 @@ module.exports = function normalize(oppositor) {
     orden: normalizeData.normalizeOrden(oppositor.orden),
     asignacion: normalizeData.normalizeAsignacion(oppositor.asignacion),
     tipovacante: normalizeData.normalizeTipoVacantes(oppositor.tipovacante),
+    dat: normalizeData.normalizeDatName(oppositor.dat),
     jornada: normalizeData.normalizeJornada(oppositor.jornada),
   }
 }
