@@ -10,6 +10,9 @@ module.exports = data =>
       puntuacion: Joi.number().required(),
       acceso2: Joi.boolean().required(),
       exp: Joi.boolean().required(),
+      orden: Joi.number()
+        .min(0)
+        .required(),
       tipovacantes: Joi.string().required(),
       norte: Joi.number().integer(),
       sur: Joi.number().integer(),

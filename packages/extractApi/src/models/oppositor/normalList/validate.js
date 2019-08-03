@@ -16,7 +16,6 @@ module.exports = data =>
       baremo212: Joi.number().required(),
       baremo22: Joi.number().required(),
       orden: Joi.number()
-        .integer()
         .min(0)
         .required(),
       acceso2: Joi.boolean().required(),
