@@ -2,7 +2,7 @@ const { Transform } = require('stream')
 const fs = require('fs')
 
 module.exports = (outputPath, { debug = false } = {}) => {
-  const sourceTruth = {}
+  let sourceTruth = {}
   let tempSpecialty = ''
 
   const writable = new Transform({
@@ -19,11 +19,31 @@ module.exports = (outputPath, { debug = false } = {}) => {
 
         if (specialty) {
           if (specialty !== tempSpecialty) {
-            sourceTruth[specialty] = {}
+            sourceTruth = {}
             tempSpecialty = specialty
           }
         } else {
-          sourceTruth[tempSpecialty][oppositor.orden] = oppositor
+          oppositor.orden = sourceTruth[oppositor.orden]
+            ? oppositor.orden + 0.1
+            : oppositor.orden
+
+          const {
+            nif,
+            apellidosynombre,
+            puntuacion,
+            orden,
+            acceso2,
+            exp,
+          } = oppositor
+
+          sourceTruth[oppositor.orden] = {
+            nif,
+            apellidosynombre,
+            puntuacion,
+            orden,
+            acceso2,
+            exp,
+          }
         }
         callback(null, chunk)
       } catch (err) {
@@ -33,9 +53,8 @@ module.exports = (outputPath, { debug = false } = {}) => {
   })
   writable.on('finish', () => {
     fs.writeFileSync(
-      `${outputPath}/sourceTruth.json`,
-      JSON.stringify(sourceTruth),
-      { flag: 'a' }
+      `${outputPath}/${tempSpecialty}.json`,
+      JSON.stringify(sourceTruth)
     )
   })
 
