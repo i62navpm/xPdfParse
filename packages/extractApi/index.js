@@ -52,6 +52,7 @@ const voluntaryList = [
 const assignmentList = [
   {
     list: 'assignmentList',
+    date: '2019-08-01',
   },
 ]
 
@@ -103,7 +104,7 @@ async function init() {
     let extractApi = new ExtractApi()
     for (const list of assignmentList) {
       await extractApi
-        .from(list, { debug: false })
+        .from(list, { debug: false, insertDate: list.date })
         .extract()
         .normalize()
         .getFromSourceTruth()
